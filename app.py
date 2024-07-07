@@ -87,3 +87,25 @@ def statistics(dictionary_name):
     word_count = len(dictionaries[dictionary_name])
     example_count = sum(len(entry["examples"]) for entry in dictionaries[dictionary_name].values())
     return render_template('statistics.html', dictionary_name=dictionary_name, word_count=word_count, example_count=example_count)
+@app.route('/add_word/<dictionary_name>', methods=['GET', 'POST'])
+def add_word(dictionary_name):
+    if request.method == 'POST':
+        word = request.form.get('word')
+        meaning = request.form.get('meaning')
+        examples = request.form.get('examples')
+        wordgem = request.form.get('wordgem')
+        pronji = request.form.get('pronji')
+        alphapron = request.form.get('alphapron')
+        
+        if word and meaning:
+            dictionaries[dictionary_name][word] = {
+                "meaning": meaning,
+                "examples": examples.split('\n'),
+                "wordgem": wordgem,
+                "pronji": pronji,
+                "alphapron": alphapron
+            }
+            return redirect(url_for('view_dictionary', dictionary_name=dictionary_name))
+        else:
+            flash('単語と意味を入力してください')
+    return render_template('add_word.html', dictionary_name=dictionary_name)
