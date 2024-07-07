@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <title>管理者ページ</title>
+  </head>
+  <body>
+    <h1>管理者ページ</h1>
+    <h2>辞書管理</h2>
+    <ul>
+      {% for word, meaning in dictionary.items() %}
+        <li>{{ word }}: {{ meaning }}</li>
+      {% endfor %}
+    </ul>
+    <h2>ユーザー管理</h2>
+    <ul>
+      {% for user, details in users.items() %}
+        <li>{{ user }}: {{ details['role'] }}</li>
+      {% endfor %}
+    </ul>
+    <footer>
+      <p>Google Terms of Use apply</p>
+      <p>スペシャルサンクス：SakaDicに支援した方々</p>
+    </footer>
+  </body>
+</html>
