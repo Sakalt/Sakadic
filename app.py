@@ -1,3 +1,16 @@
+import os
+from flask import Flask, request, redirect, url_for, render_template, flash, send_file
+from werkzeug.utils import secure_filename
+import json
+
+app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = 'uploads'
+app.config['ALLOWED_EXTENSIONS'] = {'woff', 'ttf', 'otf', 'sfnt', 'json'}
+app.secret_key = 'supersecretkey'
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
+
 # モックデータベース
 dictionaries = {
     "default": {
@@ -52,3 +65,30 @@ def upload_otm():
 
     flash('ファイルのアップロードに失敗しました')
     return redirect(request.url)
+
+@app.route('/export_otm/<dictionary_name>', methods=['GET'])
+def export_otm(dictionary_name):
+    if dictionary_name in dictionaries:
+        data = {
+            "dictionary": list(dictionaries[dictionary_name].values())
+        }
+        filename = f"{dictionary_name}_export.json"
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        with open(filepath, 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=4)
+        return send_file(filepath, as_attachment=True)
+    else:
+        flash('辞書が見つかりません')
+        return redirect(url_for('public_dic'))
+
+# 辞書一覧の表示
+@app.route('/')
+def index():
+    return render_template('index.html', dictionaries=dictionaries.keys())
+
+@app.route('/public_dic/<dictionary_name>')
+def public_dic(dictionary_name):
+    return render_template('public_dic.html', dictionary=dictionaries.get(dictionary_name, {}))
+
+if __name__ == '__main__':
+    app.run(debug=True)
