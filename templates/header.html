@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='example.png') }}" alt="Example Image">
+        <nav>
+            <a href="{{ url_for('index') }}">ホーム</a>
+            <a href="{{ url_for('hontai') }}">単語</a>
+            <a href="{{ url_for('example') }}">例文</a>
+            <a href="{{ url_for('todayex') }}">今日の例文</a>
+            <a href="{{ url_for('setting') }}">設定</a>
+            <a href="{{ url_for('wordrec') }}">造語依頼</a>
+        </nav>
+    </header>
+</body>
+</html>
