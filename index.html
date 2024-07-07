@@ -7,15 +7,15 @@
   <body>
     <h1>ようこそ、SakaDicへ！</h1>
     <ul>
-      <li><a href="/templates/dic">辞書検索</a></li>
-      <li><a href="/templates/example">今日の例文</a></li>
-      <li><a href="/templates/user">アカウント</a></li>
-      <li><a href="/templates/register">アカウント作成</a></li>
-      <li><a href="/templates/groups">グループ</a></li>
-      <li><a href="/templates/public_dic">みんなの辞書</a></li>
-      <li><a href="/templates/add_word">辞書作成</a></li>
-      <li><a href="/templates/word_request">造語依頼</a></li>
-      <li><a href="/templates/upload_image">画像アップロード</a></li>
+      <li><a href="/Sakadic/templates/dic">辞書検索</a></li>
+      <li><a href="/Sakadic/templates/example">今日の例文</a></li>
+      <li><a href="/Sakadic/templates/user">アカウント</a></li>
+      <li><a href="/Sakadic/templates/register">アカウント作成</a></li>
+      <li><a href="/Sakadic/templates/groups">グループ</a></li>
+      <li><a href="/Sakadic/templates/public_dic">みんなの辞書</a></li>
+      <li><a href="/Sakadic/templates/add_word">辞書作成</a></li>
+      <li><a href="/Sakadic/templates/word_request">造語依頼</a></li>
+      <li><a href="/Sakadic/templates/upload_image">画像アップロード</a></li>
       {% if session.get('role') == 'admin' %}
         <li><a href="/manage">管理者ページ</a></li>
       {% endif %}
