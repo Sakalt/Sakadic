@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <title>辞書検索</title>
+  </head>
+  <body>
+    <h1>辞書検索</h1>
+    <form method="post">
+      <label for="word">単語:</label>
+      <input type="text" id="word" name="word">
+      <button type="submit">検索</button>
+    </form>
+    {% if word %}
+      <h2>{{ word }}</h2>
+      <p>意味: {{ meaning }}</p>
+      <p>変化形: {{ forms|join(', ') }}</p>
+      <p>タグ: {{ tags|join(', ') }}</p>
+      <p>関連語: {{ related|join(', ') }}</p>
+    {% endif %}
+    <footer>
+      <p>Google Terms of Use apply</p>
+      <p>スペシャルサンクス：SakaDicに支援した方々</p>
+    </footer>
+  </body>
+</html>
