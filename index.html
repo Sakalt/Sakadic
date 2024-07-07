@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <title>SakaDic</title>
+  </head>
+  <body>
+    <h1>ようこそ、SakaDicへ！</h1>
+    <ul>
+      <li><a href="/dic">辞書検索</a></li>
+      <li><a href="/example">今日の例文</a></li>
+      <li><a href="/user">アカウント</a></li>
+      <li><a href="/register">アカウント作成</a></li>
+      <li><a href="/groups">グループ</a></li>
+      <li><a href="/public_dic">みんなの辞書</a></li>
+      <li><a href="/add_word">辞書作成</a></li>
+      <li><a href="/word_request">造語依頼</a></li>
+      <li><a href="/upload_image">画像アップロード</a></li>
+      {% if session.get('role') == 'admin' %}
+        <li><a href="/manage">管理者ページ</a></li>
+      {% endif %}
+    </ul>
+    <footer>
+      <p>Google Terms of Use apply</p>
+      <p>スペシャルサンクス：SakaDicに支援した方々</p>
+    </footer>
+  </body>
+</html>
