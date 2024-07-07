@@ -1,40 +1,54 @@
 # モックデータベース
-dictionary = {
-    "apple": {"meaning": "A fruit that is sweet and crisp.", "forms": ["apples"], "tags": ["fruit"], "related": ["banana"]},
-    "banana": {"meaning": "A yellow fruit that is soft and sweet.", "forms": ["bananas"], "tags": ["fruit"], "related": ["apple"]}
+dictionaries = {
+    "default": {
+        "apple": {
+            "meaning": "A fruit that is sweet and crisp.",
+            "forms": ["apples"],
+            "tags": ["fruit"],
+            "related": ["banana"],
+            "examples": ["I ate an apple for breakfast."]
+        },
+        "banana": {
+            "meaning": "A yellow fruit that is soft and sweet.",
+            "forms": ["bananas"],
+            "tags": ["fruit"],
+            "related": ["apple"],
+            "examples": ["Bananas are rich in potassium."]
+        }
+    }
 }
 
-@app.route('/add_word', methods=['GET', 'POST'])
-def add_word():
-    if request.method == 'POST':
-        word = request.form.get('word')
-        meaning = request.form.get('meaning')
-        forms = request.form.get('forms').split(',')
-        tags = request.form.get('tags').split(',')
-        related = request.form.get('related').split(',')
-        if word and meaning:
-            dictionary[word] = {"meaning": meaning, "forms": forms, "tags": tags, "related": related}
-            return redirect(url_for('public_dic'))
-        else:
-            return "単語と意味を入力してください"
-    return render_template('add_word.html')
+# 造語依頼リスト
+word_requests = []
 
-@app.route('/public_dic')
-def public_dic():
-    return render_template('public_dic.html', dictionary=dictionary)
+@app.route('/upload_otm', methods=['POST'])
+def upload_otm():
+    if 'file' not in request.files:
+        flash('ファイルが選択されていません')
+        return redirect(request.url)
+    
+    file = request.files['file']
+    dictionary_name = request.form.get('dictionary')
 
-@app.route('/dic', methods=['GET', 'POST'])
-def dic():
-    if request.method == 'POST':
-        word = request.form.get('word')
-        entry = dictionary.get(word)
-        if entry:
-            meaning = entry["meaning"]
-            forms = entry["forms"]
-            tags = entry["tags"]
-            related = entry["related"]
-        else:
-            meaning = "Word not found."
-            forms = tags = related = []
-        return render_template('dic.html', word=word, meaning=meaning, forms=forms, tags=tags, related=related)
-    return render_template('dic.html')
+    if file.filename == '':
+        flash('ファイルが選択されていません')
+        return redirect(request.url)
+
+    if dictionary_name not in dictionaries:
+        flash('辞書が存在しません')
+        return redirect(request.url)
+
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        flash('ファイルがアップロードされました')
+
+        with open(os.path.join(app.config['UPLOAD_FOLDER'], filename), 'r', encoding='utf-8') as f:
+            data = json.load(f)
+            for entry in data['dictionary']:
+                dictionaries[dictionary_name][entry['word']] = entry
+
+        return redirect(url_for('public_dic'))
+
+    flash('ファイルのアップロードに失敗しました')
+    return redirect(request.url)
