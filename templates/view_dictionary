@@ -1,0 +1,32 @@
+𗀄<!doctype html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <style>
+        h1 {
+            color: {{ header_color }};
+        }
+        h2 {
+            color: {{ heading_color }};
+        }
+        .word {
+            color: {{ word_color }};
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ dictionary_name }}</h1>
+    <a href="{{ url_for('add_word', dictionary_name=dictionary_name) }}">単語を追加</a>
+    <a href="{{ url_for('settings', dictionary_name=dictionary_name) }}">設定</a>
+    <a href="{{ url_for('statistics', dictionary_name=dictionary_name) }}">統計</a>
+    <a href="{{ url_for('example_sentence', dictionary_name=dictionary_name) }}">今日の例文</a>
+    <a href="{{ url_for('request_word', dictionary_name=dictionary_name) }}">造語依頼</a>
+
+    <h2>単語一覧</h2>
+    <ul>
+        {% for word, details in dictionary.items() %}
+            <li class="word">{{ word }}: {{ details.meaning }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
