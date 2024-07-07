@@ -2,17 +2,30 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8">
-    <title>造語依頼</title>
+    <title>造語依頼リスト</title>
   </head>
   <body>
-    <h1>造語依頼</h1>
-    <form method="post">
-      <label for="word">単語:</label>
-      <input type="text" id="word" name="word">
-      <label for="meaning">意味:</label>
-      <input type="text" id="meaning" name="meaning">
-      <button type="submit">依頼</button>
-    </form>
+    <h1>造語依頼リスト</h1>
+    <table border="1">
+      <tr>
+        <th>単語</th>
+        <th>意味</th>
+        <th>変化形</th>
+        <th>タグ</th>
+        <th>関連語</th>
+        <th>例文</th>
+      </tr>
+      {% for request in word_requests %}
+        <tr>
+          <td>{{ request.word }}</td>
+          <td>{{ request.meaning }}</td>
+          <td>{{ request.forms|join(', ') }}</td>
+          <td>{{ request.tags|join(', ') }}</td>
+          <td>{{ request.related|join(', ') }}</td>
+          <td>{{ request.examples|join(', ') }}</td>
+        </tr>
+      {% endfor %}
+    </table>
     <footer>
       <p>Google Terms of Use apply</p>
       <p>スペシャルサンクス：SakaDicに支援した方々</p>
