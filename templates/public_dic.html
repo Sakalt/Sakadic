@@ -2,28 +2,37 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8">
-    <title>みんなの辞書</title>
+    <title>{{ dictionary_name }}の辞書</title>
+    <style>
+      {% if custom_font %}
+      @font-face {
+        font-family: 'CustomFont';
+        src: url('/uploads/{{ custom_font }}') format('truetype');
+      }
+      body {
+        font-family: 'CustomFont', sans-serif;
+      }
+      {% endif %}
+    </style>
   </head>
   <body>
-    <h1>みんなの辞書</h1>
-    <table border="1">
-      <tr>
-        <th>単語</th>
-        <th>意味</th>
-        <th>変化形</th>
-        <th>タグ</th>
-        <th>関連語</th>
-      </tr>
+    <h1>{{ dictionary_name }}の辞書</h1>
+    <form action="/upload_font" method="post" enctype="multipart/form-data">
+      <input type="file" name="file">
+      <input type="submit" value="フォントをアップロード">
+    </form>
+    <ul>
       {% for word, details in dictionary.items() %}
-        <tr>
-          <td>{{ word }}</td>
-          <td>{{ details.meaning }}</td>
-          <td>{{ details.forms|join(', ') }}</td>
-          <td>{{ details.tags|join(', ') }}</td>
-          <td>{{ details.related|join(', ') }}</td>
-        </tr>
+        <li>
+          <strong>{{ word }}</strong><br>
+          <em>{{ details.meaning }}</em><br>
+          <strong>変化形:</strong> {{ details.forms|join(', ') }}<br>
+          <strong>タグ:</strong> {{ details.tags|join(', ') }}<br>
+          <strong>関連語:</strong> {{ details.related|join(', ') }}<br>
+          <strong>例文:</strong> {{ details.examples|join(', ') }}
+        </li>
       {% endfor %}
-    </table>
+    </ul>
     <footer>
       <p>Google Terms of Use apply</p>
       <p>スペシャルサンクス：SakaDicに支援した方々</p>
