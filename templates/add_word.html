@@ -1,27 +1,30 @@
 <!doctype html>
 <html lang="ja">
-  <head>
+<head>
     <meta charset="utf-8">
-    <title>辞書作成</title>
-  </head>
-  <body>
-    <h1>辞書作成</h1>
+</head>
+<body>
+    <h1>単語を追加: {{ dictionary_name }}</h1>
     <form method="post">
-      <label for="word">単語:</label>
-      <input type="text" id="word" name="word">
-      <label for="meaning">意味:</label>
-      <input type="text" id="meaning" name="meaning">
-      <label for="forms">変化形 (カンマ区切り):</label>
-      <input type="text" id="forms" name="forms">
-      <label for="tags">タグ (カンマ区切り):</label>
-      <input type="text" id="tags" name="tags">
-      <label for="related">関連語 (カンマ区切り):</label>
-      <input type="text" id="related" name="related">
-      <button type="submit">追加</button>
+        <label for="word">単語:</label>
+        <input type="text" id="word" name="word"><br>
+
+        <label for="meaning">意味:</label>
+        <textarea id="meaning" name="meaning"></textarea><br>
+
+        <label for="examples">例文:</label>
+        <textarea id="examples" name="examples"></textarea><br>
+
+        <label for="wordgem">WordGem:</label>
+        <textarea id="wordgem" name="wordgem"></textarea><br>
+
+        <label for="pronji">PronJi:</label>
+        <textarea id="pronji" name="pronji"></textarea><br>
+
+        <label for="alphapron">AlphaPron:</label>
+        <textarea id="alphapron" name="alphapron"></textarea><br>
+
+        <button type="submit">保存</button>
     </form>
-    <footer>
-      <p>Google Terms of Use apply</p>
-      <p>スペシャルサンクス：SakaDicに支援した方々</p>
-    </footer>
-  </body>
+</body>
 </html>
