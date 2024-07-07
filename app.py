@@ -88,6 +88,7 @@ def statistics(dictionary_name):
     example_count = sum(len(entry["examples"]) for entry in dictionaries[dictionary_name].values())
     return render_template('statistics.html', dictionary_name=dictionary_name, word_count=word_count, example_count=example_count)
 @app.route('/add_word/<dictionary_name>', methods=['GET', 'POST'])
+@app.route('/add_word/<dictionary_name>', methods=['GET', 'POST'])
 def add_word(dictionary_name):
     if request.method == 'POST':
         word = request.form.get('word')
