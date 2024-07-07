@@ -3,15 +3,9 @@
 <head>
     <meta charset="utf-8">
     <style>
-        h1 {
-            color: {{ header_color }};
-        }
-        h2 {
-            color: {{ heading_color }};
-        }
-        .word {
-            color: {{ word_color }};
-        }
+        h1 { color: #CC7700; }
+        h2 { color: #767676; }
+        .word { color: #EEA100; }
     </style>
 </head>
 <body>
@@ -25,14 +19,14 @@
     <h2>単語一覧</h2>
     <ul>
         {% for word, details in dictionary.items() %}
-            <li class="word">{{ word }}: {{ details.meaning }}</li>
+            <li class="word">{{ word }}: {{ details['meaning'] }}</li>
         {% endfor %}
     </ul>
 
     <h2>ランダムな単語</h2>
     <ul>
         {% for word, details in random_words.items() %}
-            <li class="word">{{ word }}: {{ details.meaning }}</li>
+            <li class="word">{{ word }}: {{ details['meaning'] }}</li>
         {% endfor %}
     </ul>
 </body>
