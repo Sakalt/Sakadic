@@ -1,3 +1,4 @@
+
 # ヘッダーと見出しの色設定
 HEADER_COLOR = "#CC7700"
 WORD_COLOR = "#EEA100"
@@ -110,3 +111,21 @@ def add_word(dictionary_name):
         else:
             flash('単語と意味を入力してください')
     return render_template('add_word.html', dictionary_name=dictionary_name)
+    @app.route('/settings/<dictionary_name>', methods=['GET', 'POST'])
+def settings(dictionary_name):
+    if dictionary_name not in dictionaries:
+        flash('辞書が見つかりません')
+        return redirect(url_for('public_dic'))
+
+    if request.method == 'POST':
+        description = request.form.get('description')
+        font = request.form.get('font')
+        wordgem = request.form.get('wordgem')
+        pronji = request.form.get('pronji')
+        alphapron = request.form.get('alphapron')
+
+        # 設定を保存する処理（仮実装）
+        flash('設定が保存されました')
+        return redirect(url_for('view_dictionary', dictionary_name=dictionary_name))
+
+    return render_template('settings.html', dictionary_name=dictionary_name)
